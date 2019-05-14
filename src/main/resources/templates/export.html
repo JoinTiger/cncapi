@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>导出生成excel</title>
+    <script src="/js/xlsx.full.min.js"></script>
+    <script src="/js/FileSaver.min.js"></script>
+    <script src="/js/jquery-3.4.0.js"></script>
+</head>
+
+<body>
+
+<form id="documentForm"  ><a th:text="${json1}"></a>
+    <button onclick="login()" type="button"></button>
+</form>
+
+<a href="" download="这里是下载的文件名.xlsx" id="hf"></a>
+
+
+<script  >
+    function login() {
+        $.ajax({
+            //几个参数需要注意一下
+            type: "POST",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/excel/export" ,//url
+            data: $("documentForm").serialize(),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                downloadExl(jsonHandle(result))
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+    }
+
+    function jsonHandle(result) {
+        var retData = [];
+        var jsono = result;
+        //alert(JSON.stringify(result));
+        var data = {"批次号": "", "系统Sn号": "", "数控编号": "", "ipc编号": "", "合同编号": "", "驱动编号": "", "电机编号": ""};
+        for(i in jsono) {
+            count = 0;
+            data.批次号 = jsono[i].批次号;
+            data.系统Sn号 = jsono[i].系统Sn号;
+            data.数控编号 = jsono[i].数控编号;
+            data.ipc编号 = jsono[i].ipc编号;
+            data.合同编号 = jsono[i].合同编号;
+            for(j in jsono[i].deviceInfo) {
+                if(count != 0) {
+                    data.批次号 = "";
+                    data.系统Sn号 = "";
+                    data.数控编号 = "";
+                    data.ipc编号 = "";
+                    data.合同编号 = "";
+                }
+                count++;
+                data.驱动编号 = jsono[i].deviceInfo[j].驱动编号;
+                data.电机编号 = jsono[i].deviceInfo[j].电机编号;
+                var newData = $.extend(true,{}, data);
+                retData.push(newData);
+            }
+
+        }
+        return retData
+    }
+
+    var tmpDown; //导出的二进制对象
+    function downloadExl(json,type) {
+        var tmpdata = json[0];
+        json.unshift({});
+        var keyMap = []; //获取keys
+        for (var k in tmpdata) {
+            keyMap.push(k);
+            json[0][k] = k;
+        }
+        var tmpdata = [];//用来保存转换好的json
+        json.map((v, i) => keyMap.map((k, j) => Object.assign({}, {
+            v: v[k],
+            position: (j > 25 ? getCharCol(j) : String.fromCharCode(65 + j)) + (i + 1)
+        }))).reduce((prev, next) => prev.concat(next)).forEach((v, i) => tmpdata[v.position] = {
+            v: v.v
+        });
+        var outputPos = Object.keys(tmpdata); //设置区域,比如表格从A1到D10
+        var tmpWB = {
+            SheetNames: ['mySheet'], //保存的表标题
+            Sheets: {
+                'mySheet': Object.assign({},
+                    tmpdata, //内容
+                    {
+                        '!ref': outputPos[0] + ':' + outputPos[outputPos.length - 1] //设置填充区域
+                    })
+            }
+        };
+        tmpDown = new Blob([s2ab(XLSX.write(tmpWB,
+            {bookType: (type == undefined ? 'xlsx':type),bookSST: false, type: 'binary'}//这里的数据是用来定义导出的格式类型
+        ))], {
+            type: ""
+        }); //创建二进制对象写入转换好的字节流
+        var href = URL.createObjectURL(tmpDown); //创建对象超链接
+        document.getElementById("hf").href = href; //绑定a标签
+        document.getElementById("hf").click(); //模拟点击实现下载
+        setTimeout(function() { //延时释放
+            URL.revokeObjectURL(tmpDown); //用URL.revokeObjectURL()来释放这个object URL
+        }, 100);
+    }
+
+    function s2ab(s) { //字符串转字符流
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+    // 将指定的自然数转换为26进制表示。映射关系：[0-25] -> [A-Z]。
+    function getCharCol(n) {
+        let temCol = '',
+            s = '',
+            m = 0
+        while (n > 0) {
+            m = n % 26 + 1
+            s = String.fromCharCode(m + 64) + s
+            n = (n - m) / 26
+        }
+        return s
+    }
+</script>
+</body>
+
+</html>
