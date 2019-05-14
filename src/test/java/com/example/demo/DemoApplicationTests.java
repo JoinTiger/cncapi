@@ -92,4 +92,9 @@ public class DemoApplicationTests {
 															"bdafa", "b32");
 	}
 
+	@Test
+	public void test07() {
+
+	}
+
 }
