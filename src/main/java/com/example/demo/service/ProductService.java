@@ -65,25 +65,23 @@ public class ProductService {
 
         Long id = product.getId();
 
-        System.out.println("id**********************" + id.longValue());
-
         Standard standard = product.getStandard();
         Result result = product.getResult();
         List<Motor> motors = product.getMotors();
 
 
 
-        standard.setId(id);
+        standard.setProductId(id);
         standardRepository.save(standard);  //插入检测数据标准表
 
 
 
-        result.setId(id);
+        result.setProductId(id);
         resultRepository.save(result);  //插入检测数据结果表
 
 
         for (Motor motor : motors) {
-            motor.setId(id);
+            motor.setProductId(id);
             motorRepository.save(motor);  //插入伺服电机数据表
         }
     }
