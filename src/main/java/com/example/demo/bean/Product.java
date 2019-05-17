@@ -15,60 +15,49 @@ public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @JsonIgnore
     private Long id;
 
-
-    @Column(name = "contractNum")
-    private String contractNum;
-
-
-    @Column(name = "ncNum")
-    private String ncNum;
-
-    @Column(name = "ncType")
-    private String ncType;
-
-    @Column(name = "ipcNum")
-    private String ipcNum;
-
-    @Column(name = "macSn")
-    private String macSn;
-
-    @Column(name = "batchId")
+    @JsonIgnore
     private String batchId;
 
-    @JsonIgnore
-    @Column(name = "time")
-    private Date time;
+    private Long uploadTime;
 
+    private Integer version;
 
-    @Transient
-    private Standard standard;
+    private Integer macAxNum;
 
-    @Transient
-    private Result result;
+    private String macModel;
 
-    @Transient
-    private List<Motor> motors = new ArrayList<>();
+    private String macNO;
+
+    private String macSN;
+
+    private String ipcCode;
+
+    private String contractCode;
+
+    private String customerName;
+
+    private String loginName;
 
 
     public Product() {
     }
 
-    public Product(String contractNum, String ncNum, String ncType, String ipcNum, String macSn, String batchId, Date time, Standard standard, Result result, List<Motor> motors) {
-        this.contractNum = contractNum;
-        this.ncNum = ncNum;
-        this.ncType = ncType;
-        this.ipcNum = ipcNum;
-        this.macSn = macSn;
+    public Product(String batchId, Long uploadTime, Integer version, Integer macAxNum, String macModel, String macNO, String macSN, String ipcCode, String contractCode, String customerName, String loginName) {
         this.batchId = batchId;
-        this.time = time;
-        this.standard = standard;
-        this.result = result;
-        this.motors = motors;
+        this.uploadTime = uploadTime;
+        this.version = version;
+        this.macAxNum = macAxNum;
+        this.macModel = macModel;
+        this.macNO = macNO;
+        this.macSN = macSN;
+        this.ipcCode = ipcCode;
+        this.contractCode = contractCode;
+        this.customerName = customerName;
+        this.loginName = loginName;
     }
-
 
     public Long getId() {
         return id;
@@ -76,46 +65,6 @@ public class Product implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getContractNum() {
-        return contractNum;
-    }
-
-    public void setContractNum(String contractNum) {
-        this.contractNum = contractNum;
-    }
-
-    public String getNcNum() {
-        return ncNum;
-    }
-
-    public void setNcNum(String ncNum) {
-        this.ncNum = ncNum;
-    }
-
-    public String getNcType() {
-        return ncType;
-    }
-
-    public void setNcType(String ncType) {
-        this.ncType = ncType;
-    }
-
-    public String getIpcNum() {
-        return ipcNum;
-    }
-
-    public void setIpcNum(String ipcNum) {
-        this.ipcNum = ipcNum;
-    }
-
-    public String getMacSn() {
-        return macSn;
-    }
-
-    public void setMacSn(String macSn) {
-        this.macSn = macSn;
     }
 
     public String getBatchId() {
@@ -126,35 +75,83 @@ public class Product implements Serializable {
         this.batchId = batchId;
     }
 
-    public Date getTime() {
-        return time;
+    public Long getUploadTime() {
+        return uploadTime;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setUploadTime(Long uploadTime) {
+        this.uploadTime = uploadTime;
     }
 
-    public Standard getStandard() {
-        return standard;
+    public Integer getVersion() {
+        return version;
     }
 
-    public void setStandard(Standard standard) {
-        this.standard = standard;
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
-    public Result getResult() {
-        return result;
+    public Integer getMacAxNum() {
+        return macAxNum;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
+    public void setMacAxNum(Integer macAxNum) {
+        this.macAxNum = macAxNum;
     }
 
-    public List<Motor> getMotors() {
-        return motors;
+    public String getMacModel() {
+        return macModel;
     }
 
-    public void setMotors(List<Motor> motors) {
-        this.motors = motors;
+    public void setMacModel(String macModel) {
+        this.macModel = macModel;
+    }
+
+    public String getMacNO() {
+        return macNO;
+    }
+
+    public void setMacNO(String macNO) {
+        this.macNO = macNO;
+    }
+
+    public String getMacSN() {
+        return macSN;
+    }
+
+    public void setMacSN(String macSN) {
+        this.macSN = macSN;
+    }
+
+    public String getIpcCode() {
+        return ipcCode;
+    }
+
+    public void setIpcCode(String ipcCode) {
+        this.ipcCode = ipcCode;
+    }
+
+    public String getContractCode() {
+        return contractCode;
+    }
+
+    public void setContractCode(String contractCode) {
+        this.contractCode = contractCode;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 }
