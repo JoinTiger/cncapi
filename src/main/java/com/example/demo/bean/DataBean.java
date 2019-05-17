@@ -59,6 +59,57 @@ public class DataBean implements Serializable {
         this.elecDataList = elecDataList;
     }
 
+    @Override
+    public String toString() {
+
+        String str = "";
+
+        str += "\n uploadTime:" + this.uploadTime.longValue();
+        str += "\n version:" + this.version.intValue();
+        str += "\n macAxNum:" + this.macAxNum.intValue();
+        str += "\n macModel:" + this.macModel;
+        str += "\n macNO:" + this.macNO;
+
+
+        str += "\n ncVer:";
+        str += "\n      drvVer:" + this.ncVer.getDrvVer();
+        str += "\n      testDrvVer:" + this.ncVer.getTestDrvVer();
+
+        str += "\n servos:";
+        for(Servo servo : this.getServos()) {
+            str += "\n      axisName:" + servo.getAxisName();
+            str += "\n      servoType:" + servo.getServoType();
+            str += "\n      testServoType:" + servo.getTestServoType();
+        }
+
+        str += "\n dataList:";
+
+        for(ElecDataList elecData : this.getElecDataList()) {
+            str += "\n      axServo:";
+            str += "\n              axisName:" + elecData.getAxServo().getAxisName();
+            str += "\n              elecId:" + elecData.getAxServo().getElecId();
+
+            str += "\n      accTime:";
+            MinMaxAveCur accTime = elecData.getAccTime();
+
+            str += "\n              min:" + accTime.getMin();
+            str += "\n              max:" + accTime.getMax();
+            str += "\n              ave:" + accTime.getAverage();
+            str += "\n              cur:" + accTime.getCur();
+
+
+            str += "\n      decTime:";
+            MinMaxAveCur decTime = elecData.getDecTime();
+
+            str += "\n              min:" + decTime.getMin();
+            str += "\n              max:" + decTime.getMax();
+            str += "\n              ave:" + decTime.getAverage();
+            str += "\n              cur:" + decTime.getCur();
+
+        }
+
+        return str;
+    }
 
     public Long getUploadTime() {
         return uploadTime;
