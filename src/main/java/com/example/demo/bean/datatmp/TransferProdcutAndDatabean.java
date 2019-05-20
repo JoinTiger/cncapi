@@ -10,9 +10,44 @@ public class TransferProdcutAndDatabean implements Serializable {
 
     public Product dataBeanToProduct(DataBean dataBean) {
 
+        Product product = new Product();
+
+        /********************1.uploadTime----loginname*************************/
+        product.setUploadTime(dataBean.getUploadTime());
+        product.setVersion(dataBean.getVersion());
+        product.setMacAxNum(dataBean.getMacAxNum());
+
+        product.setMacModel(dataBean.getMacModel());
+        product.setMacNO(dataBean.getMacNO());
+        product.setMacSN(dataBean.getMacSN());
+
+        product.setIpcCode(dataBean.getIpcCode());
+        product.setContractCode(dataBean.getContractCode());
+        product.setCustomerName(dataBean.getCustomerName());
+        product.setLoginName(dataBean.getLoginName());
+
+        /********************2.ncVer************************************/
+        product.setNcVer(dataBean.getNcVer());
 
 
-        return null;
+        /********************3.servoVer*************************/
+        product.setServos(dataBean.getServos());
+
+        /********************4.elecDataList*************************/
+
+
+
+        return product;
+    }
+
+
+    public DataBean productToDataBean(Product product) {
+        DataBean dataBean = new DataBean();
+
+        //TODO
+
+
+        return dataBean;
     }
 
 
