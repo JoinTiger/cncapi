@@ -1,25 +1,17 @@
-package com.example.demo.bean;
+package com.example.demo.bean.datatmp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
+
+import com.example.demo.bean.NcVer;
+import com.example.demo.bean.Servo;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "Product")
-public class Product implements Serializable {
+public class DataBean implements Serializable {
 
-    private static final long serialVersionUID = 4963359130561432864L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
-    private Long id;
-
-    @JsonIgnore
-    private String batchId;
+    private static final long serialVersionUID = -7476917480855025563L;
 
     private Long uploadTime;
 
@@ -43,19 +35,17 @@ public class Product implements Serializable {
 
     private NcVer ncVer;
 
-    @Transient
+    @JsonProperty("servoVer")
     private List<Servo> servos = new ArrayList<>();
 
-    @Transient
-    private List<Motor> motors = new ArrayList<>();
+    @JsonProperty("elecDataList")
+    private List<ElecData> elecDatas = new ArrayList<>();
 
 
-
-    public Product() {
+    public DataBean() {
     }
 
-    public Product(String batchId, Long uploadTime, Integer version, Integer macAxNum, String macModel, String macNO, String macSN, String ipcCode, String contractCode, String customerName, String loginName, NcVer ncVer, List<Servo> servos, List<Motor> motors) {
-        this.batchId = batchId;
+    public DataBean(Long uploadTime, Integer version, Integer macAxNum, String macModel, String macNO, String macSN, String ipcCode, String contractCode, String customerName, String loginName, NcVer ncVer, List<Servo> servos, List<ElecData> elecDatas) {
         this.uploadTime = uploadTime;
         this.version = version;
         this.macAxNum = macAxNum;
@@ -68,24 +58,9 @@ public class Product implements Serializable {
         this.loginName = loginName;
         this.ncVer = ncVer;
         this.servos = servos;
-        this.motors = motors;
+        this.elecDatas = elecDatas;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getBatchId() {
-        return batchId;
-    }
-
-    public void setBatchId(String batchId) {
-        this.batchId = batchId;
-    }
 
     public Long getUploadTime() {
         return uploadTime;
@@ -183,11 +158,20 @@ public class Product implements Serializable {
         this.servos = servos;
     }
 
-    public List<Motor> getMotors() {
-        return motors;
+    public List<ElecData> getElecDatas() {
+        return elecDatas;
     }
 
-    public void setMotors(List<Motor> motors) {
-        this.motors = motors;
+    public void setElecDatas(List<ElecData> elecDatas) {
+        this.elecDatas = elecDatas;
     }
 }
+
+
+
+
+
+
+
+
+

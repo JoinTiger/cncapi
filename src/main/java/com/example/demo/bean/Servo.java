@@ -16,6 +16,8 @@ public class Servo implements Serializable {
     @JsonIgnore
     private Long id;
 
+    private String servoId;
+
     private String axisName;
 
     private String servoType;
@@ -32,7 +34,8 @@ public class Servo implements Serializable {
     public Servo() {
     }
 
-    public Servo(String axisName, String servoType, String testServoType, String servoVer, String testServoVer, Long productId) {
+    public Servo(String servoId, String axisName, String servoType, String testServoType, String servoVer, String testServoVer, Long productId) {
+        this.servoId = servoId;
         this.axisName = axisName;
         this.servoType = servoType;
         this.testServoType = testServoType;
@@ -41,13 +44,20 @@ public class Servo implements Serializable {
         this.productId = productId;
     }
 
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getServoId() {
+        return servoId;
+    }
+
+    public void setServoId(String servoId) {
+        this.servoId = servoId;
     }
 
     public String getAxisName() {
