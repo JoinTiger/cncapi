@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.redis.SequenceUtils;
+import com.example.demo.service.ProductService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ public class RedisTest {
     @Autowired
     private SequenceUtils sequenceUtil;
 
-
+    @Autowired
+    private ProductService productService;
 
     @Test
     public void test() {
@@ -29,8 +31,6 @@ public class RedisTest {
 
     @Test
     public void test01() {
-
-
     }
 
 }
