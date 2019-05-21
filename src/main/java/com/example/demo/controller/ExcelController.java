@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class ExcelController {
@@ -49,7 +50,11 @@ public class ExcelController {
     @ResponseBody
     public String excelExport() throws JsonProcessingException {
 
-        return "success";
+        List<Product> products = productService.findAll();
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.writeValueAsString(products);
     }
 
 
